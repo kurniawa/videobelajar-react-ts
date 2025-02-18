@@ -6,6 +6,7 @@ import SelectWithLabel from "../atoms/SelectWithLabel";
 import ButtonGoogle from "../atoms/ButtonGoogle";
 import ButtonLime500 from "../atoms/ButtonLime500";
 import ButtonGreen200 from "../atoms/ButtonGreen200";
+import LineHorizontalWithLabel from "../atoms/LineHorizontalWithLabel";
 
 export default function RegisterForm() {
     return (
@@ -29,19 +30,18 @@ export default function RegisterForm() {
             </div>
 
             <div className="space-y-[16px] mt-[20px] xl:mt-[24px]">
-                <ButtonLime500 label="Daftar" />
-                <ButtonGreen200 label="Masuk" />
+                <ButtonLime500 label="Daftar" to={null} />
+                <ButtonGreen200 label="Masuk" to='/login' />
             </div>
 
             <div className="mt-[20px] xl:mt-[24px]">
-                <div className="flex justify-center items-center gap-[10px]">
-                    <div className="flex-grow-1 h-[1px] bg-[#F1F1F1]"></div>
-                    <span className="font-dm-sans font-[400] text-[14px] xl:text-[16px] text-[#4A505C]">atau</span>
-                    <div className="flex-grow-1 h-[1px] bg-[#F1F1F1]"></div>
-                </div>
+                <LineHorizontalWithLabel label="atau" />
             </div>
     
-            <ButtonGoogle label="Daftar dengan Google" />
+            <div className="mt-[20px] xl:mt-[24px]">
+                <ButtonGoogle label="Daftar dengan Google" />
+            </div>
+
         </form>
     )
 }

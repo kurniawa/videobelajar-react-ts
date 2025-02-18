@@ -50,7 +50,7 @@ export default function Navbar() {
         <div className="hidden xl:flex xl:gap-[16px]">
           <Link to={"/"} className="font-dm-sans font-[500] text-[16px] px-[26px] py-[10px] font-color-333333AD">Kategori</Link>
           <Link to={"/login"} className="font-dm-sans font-[500] text-[16px] px-[26px] py-[10px] rounded-[10px] bg-[#3ECF4C] text-white">Login</Link>
-          <Link to={"/"} className="font-dm-sans font-[500] text-[16px] px-[26px] py-[10px] rounded-[10px] border border-[#3ECF4C] text-[#3ECF4C]">Register</Link>
+          <Link to={"/register"} className="font-dm-sans font-[500] text-[16px] px-[26px] py-[10px] rounded-[10px] border border-[#3ECF4C] text-[#3ECF4C]">Register</Link>
         </div>
         
         {/* Hamburger Menu untuk layar kecil */}

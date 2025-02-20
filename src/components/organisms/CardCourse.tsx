@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface CardCourseProps {
     courseName: string,
     instructorName: string,
@@ -10,7 +12,7 @@ interface CardCourseProps {
 
 export default function CardCourse({courseName, instructorName, instructorRole, price, rating, instructorImageUrl, courseImageUrl}: CardCourseProps) {
     return (
-        <div className="p-[16px] border border-[#3A35411F] rounded-[10px] bg-white xl:p-[20px]">
+        <Link to={"#"} className="p-[16px] border border-[#3A35411F] rounded-[10px] bg-white xl:p-[20px]">
             <div className="flex gap-[12px] items-center xl:grid xl:grid-cols-1 xl:gap-[16px]">
                 <div className="xl:flex xl:justify-center">
                     <div className="size-[82px] xl:w-full xl:min-h-[193px] rounded-[10px]"
@@ -77,6 +79,6 @@ export default function CardCourse({courseName, instructorName, instructorRole, 
                 </div>
                 <span className="font-poppins font-[600] text-[20px] text-[#3ECF4C] xl:text-[24px]">Rp {price}K</span>
             </div>
-        </div>
+        </Link>
     )
 }

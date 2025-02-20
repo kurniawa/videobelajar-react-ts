@@ -6,7 +6,7 @@ interface SelectWithLabelProps {
     required: boolean,
 }
 
-export default function SelectWithLabel({type, id, name, options, required}:SelectWithLabelProps) {
+export default function SelectWithLabel({id, name, options, required}:SelectWithLabelProps) {
     return (
         <div>
             <label htmlFor={id}>

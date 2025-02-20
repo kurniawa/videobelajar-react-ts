@@ -1,5 +1,3 @@
-import { act } from "react"
-
 export default function CourseCategories() {
     const course_categories = [
         {

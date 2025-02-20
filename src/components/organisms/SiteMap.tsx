@@ -43,7 +43,6 @@ export default function SiteMap() {
 
     return (
         <section>
-            {/* Informasi Halaman */}
             <ul className="flex flex-col gap-[12px] xl:flex-row xl:gap-[48px]">
                 {sites.map((site, index) => (
                     <li key={index} className="relative">

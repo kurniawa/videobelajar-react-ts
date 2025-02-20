@@ -1,4 +1,5 @@
 import CardCourseAll from "./components/organisms/CardCourseAll"
+import CourseCategories from "./components/organisms/CourseCategories"
 import Footer from "./components/organisms/Footer"
 import Newsletter from "./components/organisms/Newsletter"
 import MainLayout from "./layouts/MainLayout"
@@ -30,24 +31,15 @@ function App() {
 
         <section className="mt-[24px]">
             <div>
-                <h2 className="font-poppins font-color-222325 font-[600] text-[24px] xl:text-[32px]">Koleksi Video Pembelajaran Unggulan
+                <h2 className="font-poppins text-[#222325] font-[600] text-[24px] xl:text-[32px]">Koleksi Video Pembelajaran Unggulan
                 </h2>
-                <p className="font-dm-sans font-color-333333AD font-[500] text-[14px] mt-[10px] xl:text-[16px]">Jelajahi Dunia Pengetahuan
+                <p className="font-dm-sans text-[#333333AD] font-[500] text-[14px] mt-[10px] xl:text-[16px]">Jelajahi Dunia Pengetahuan
                     Melalui Pilihan Kami!</p>
             </div>
 
-            <div className="mt-[24px]">
-                <ul className="flex font-dm-sans text-[14px] font-[500] overflow-x-hidden whitespace-nowrap">
-                    <li className="py-[12px] pr-[36px] h-[60px] flex flex-col justify-between">
-                        <div className="font-dm-sans text-[14px] font-[500] font-color-F64920 xl:text-[16px]">Semua Kelas</div>
-                        <div className="underline"></div>
-                    </li>
-                    <li className="font-dm-sans text-[14px] font-[500] font-color-333333AD py-[12px] pr-[36px] h-[60px] xl:text-[16px]">Pemasaran</li>
-                    <li className="font-dm-sans text-[14px] font-[500] font-color-333333AD py-[12px] pr-[36px] h-[60px] xl:text-[16px]">Desain</li>
-                    <li className="font-dm-sans text-[14px] font-[500] font-color-333333AD py-[12px] pr-[36px] h-[60px] xl:text-[16px]">Pengembangan Diri</li>
-                    <li className="font-dm-sans text-[14px] font-[500] font-color-333333AD py-[12px] pr-[36px] h-[60px] xl:text-[16px]">Bisnis</li>
-                </ul>
-            </div>
+            <section className="mt-[24px]">
+              <CourseCategories />
+            </section>
 
             <div className="flex flex-col gap-[20px] mt-[24px] xl:grid xl:grid-cols-3 xl:gap-[24px]">
               <CardCourseAll />

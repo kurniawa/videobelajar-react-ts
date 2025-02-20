@@ -8,8 +8,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-1.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-1.png'
+            courseImageUrl: '/images/class-1.jpg',
+            instructorImageUrl: '/images/auditor-1.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -17,8 +17,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-2.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-2.png'
+            courseImageUrl: '/images/class-2.jpg',
+            instructorImageUrl: '/images/auditor-2.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -26,8 +26,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-3.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-3.png'
+            courseImageUrl: '/images/class-3.jpg',
+            instructorImageUrl: '/images/auditor-3.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -35,8 +35,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-4.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-4.png'
+            courseImageUrl: '/images/class-4.jpg',
+            instructorImageUrl: '/images/auditor-4.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -44,8 +44,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-5.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-5.png'
+            courseImageUrl: '/images/class-5.jpg',
+            instructorImageUrl: '/images/auditor-5.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -53,8 +53,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-6.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-6.png'
+            courseImageUrl: '/images/class-6.jpg',
+            instructorImageUrl: '/images/auditor-6.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -62,8 +62,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-7.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-1.png'
+            courseImageUrl: '/images/class-7.jpg',
+            instructorImageUrl: '/images/auditor-1.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -71,8 +71,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-8.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-8.png'
+            courseImageUrl: '/images/class-8.jpg',
+            instructorImageUrl: '/images/auditor-8.png'
         },
         {
             courseName: 'Big 4 Auditor Financial Analyst',
@@ -80,8 +80,8 @@ export default function CardCourseAll() {
             instructorRole: 'Senior Accountant',
             price: 300,
             rating: 3.5,
-            courseImageUrl: 'src/assets/images/class-9.jpg',
-            instructorImageUrl: 'src/assets/images/auditor-9.png'
+            courseImageUrl: '/images/class-9.jpg',
+            instructorImageUrl: '/images/auditor-9.png'
         },
         
     ]

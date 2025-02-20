@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import CardCourseAll from "./components/organisms/CardCourseAll"
 import CourseCategories from "./components/organisms/CourseCategories"
 import Footer from "./components/organisms/Footer"
@@ -5,6 +6,11 @@ import Newsletter from "./components/organisms/Newsletter"
 import MainLayout from "./layouts/MainLayout"
 
 function App() {
+  const sectionCoursesRef = useRef<HTMLDivElement>(null)
+
+  const scrollToSectionCouses = () => {
+    sectionCoursesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <MainLayout>
       <main className="px-[20px] py-[28px] xl:px[120px] xl:py-[64px]">
@@ -23,13 +29,14 @@ function App() {
             </div>
             <div className="mt-[24px] text-center">
                 <button
-                    className="w-full rounded-[10px] bg-[#3ECF4C] py-[10px] text-white font-dm-sans font-[400] text-[14px] max-w-[369px]">
+                    onClick={scrollToSectionCouses}
+                    className="w-full rounded-[10px] bg-[#3ECF4C] py-[10px] text-white font-dm-sans font-[400] text-[14px] max-w-[369px] hover:cursor-pointer">
                     Temukan Video Course untuk Dipelajari!
                 </button>
             </div>
         </section>
 
-        <section className="mt-[24px]">
+        <section className="mt-[24px]" ref={sectionCoursesRef}>
             <div>
                 <h2 className="font-poppins text-[#222325] font-[600] text-[24px] xl:text-[32px]">Koleksi Video Pembelajaran Unggulan
                 </h2>

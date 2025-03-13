@@ -1,10 +1,11 @@
 interface ButtonGoogleProps {
+    type: React.ButtonHTMLAttributes<HTMLButtonElement>['type'],
     label: string,
 }
 
-export default function ButtonGoogle({label}:ButtonGoogleProps) {
+export default function ButtonGoogle({type, label}:ButtonGoogleProps) {
     return (
-        <button className="w-full rounded-[10px] px-[26px] py-[8px] border border-[#F1F1F1] hover:cursor-pointer">
+        <button type={type} className="w-full rounded-[10px] px-[26px] py-[8px] border border-[#F1F1F1] hover:cursor-pointer">
             <div className="flex items-center justify-center gap-[8px]">
                 <div>
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">

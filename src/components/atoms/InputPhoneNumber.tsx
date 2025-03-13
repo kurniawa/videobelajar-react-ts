@@ -1,9 +1,11 @@
-interface InputContactNumberProps {
+interface InputPhoneNumberProps {
     label: string,
     required: boolean,
+    countryCodeRef: React.RefObject<HTMLSelectElement | null>,
+    phoneNumberRef: React.RefObject<HTMLInputElement | null>
 }
 
-export default function InputContactNumber({label, required}:InputContactNumberProps) {
+export default function InputPhoneNumber({label, required, countryCodeRef, phoneNumberRef}:InputPhoneNumberProps) {
     return (
         <div>
             <label htmlFor="no-hp">
@@ -18,12 +20,12 @@ export default function InputContactNumber({label, required}:InputContactNumberP
                             <div className="w-full h-1/2 bg-white"></div>
                         </div>
                     </div>
-                    <select name="country-code" id="country-code" className="rounded-r-md px-[10px] py-[4px] min-w-[70px] h-[48px] text-[#222325]">
+                    <select name="country-code" id="country-code" ref={countryCodeRef} className="rounded-r-md px-[10px] py-[4px] min-w-[70px] h-[48px] text-[#222325]">
                         <option value="+62">+62</option>
                     </select>
                 </div>
 
-                <input id="no-hp" type="text" className="rounded-md px-[10px] py-[4px] w-full h-[48px] border border-[#3A35411F]" />
+                <input id="no-hp" type="text" ref={phoneNumberRef} className="rounded-md px-[10px] py-[4px] w-full h-[48px] border border-[#3A35411F]" />
             </div>
         </div>
     )

@@ -4,13 +4,13 @@ interface SelectWithLabelProps {
     type: string,
     id: string,
     name: string,
-    options: {value:Gender, label:string}[]
+    options: {value:string, label:string}[]
     required: boolean,
 }
 
-enum Gender {
-    male, female
-}
+// enum Gender {
+//     male, female
+// }
 
 const SelectWithLabel = forwardRef<HTMLSelectElement, SelectWithLabelProps>(({id, name, options, required}, ref) => {
     return (

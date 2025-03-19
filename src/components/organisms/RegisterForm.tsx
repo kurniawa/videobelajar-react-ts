@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputPhoneNumber from "../atoms/InputPhoneNumber";
 import InputPassword from "../atoms/InputPassword";
 import InputWithLabel from "../atoms/InputWithLabel";
@@ -25,6 +25,8 @@ export default function RegisterForm() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
+    const navigate = useNavigate();
+
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -37,13 +39,13 @@ export default function RegisterForm() {
         console.log("Password Confirmation:", passwordConfirmationRef.current?.value);
 
         // Mengambil data dari input
-        const fullName = fullNameRef.current?.value;
-        const email = emailRef.current?.value;
-        const gender = genderRef.current?.value;
-        const countryCode = countryCodeRef.current?.value;
-        const phoneNumber = phoneNumberRef.current?.value;
-        const password = passwordRef.current?.value;
-        const passwordConfirmation = passwordConfirmationRef.current?.value;
+        const fullName = fullNameRef.current?.value?.trim() || "";
+        const email = emailRef.current?.value?.trim() || "";
+        const gender = genderRef.current?.value?.trim() || "";
+        const countryCode = countryCodeRef.current?.value?.trim() || "";
+        const phoneNumber = phoneNumberRef.current?.value?.trim() || "";
+        const password = passwordRef.current?.value; // Jangan trim password
+        const passwordConfirmation = passwordConfirmationRef.current?.value; // Jangan trim password
 
         // Validation
         if (!fullName || !email || !gender || !countryCode || !phoneNumber || !password || !passwordConfirmation) {
@@ -78,13 +80,22 @@ export default function RegisterForm() {
 
             if (!response.ok) {
                 throw new Error(data.error || "Terjadi kesalahan saat mendaftar");
+            } else {
+                setSuccess("Pendaftaran berhasil! Silakan login.");
+                
+                setTimeout(() => {
+                    navigate("/login"); // ✅ Redirect ke halaman login
+                    setLoading(false);
+                }, 2000);
             }
 
-            setSuccess("Pendaftaran berhasil! Silakan login.");
         } catch (err: any) {
             setError(err.message);
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+                
+            }, 2000);
         }
 
     };

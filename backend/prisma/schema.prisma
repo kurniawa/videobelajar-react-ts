@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  fullName    String?
-  gender      Gender?
-  email       String   @unique
-  password    String
-  countryCode String?
-  phoneNumber String?
-  role        Role     @default(USER)
-  videos      Video[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              Int       @id @default(autoincrement())
+  fullName        String?
+  gender          Gender?
+  email           String    @unique
+  password        String
+  countryCode     String?
+  phoneNumber     String?
+  phoneNumberFull String?   @unique
+  role            Role      @default(USER)
+  videos          Video[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Video {

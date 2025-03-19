@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -40,6 +41,22 @@ export const createUser = async (req, res) => {
         return res.status(400).json({ error: "Email sudah terdaftar!" });
     }
 
+    // Cek apakah nomor telepon sudah digunakan
+    let phoneNumberFull = null;
+    let phoneNumberTrimmedFrontZero = null
+    if (countryCode && phoneNumber) {
+        // Hilangkan angka 0 di depan nomor telepon
+        phoneNumberTrimmedFrontZero = phoneNumber.replace(/^0+/, "");
+
+        phoneNumberFull = `${countryCode}${phoneNumberTrimmedFrontZero}`;
+        const existingPhoneNumber = await prisma.user.findFirst({
+            where: { phoneNumberFull },
+        });
+        if (existingPhoneNumber) {
+            return res.status(400).json({ error: "Nomor telepon sudah terdaftar!" });
+        }
+    }
+
     // Enkripsi password sebelum disimpan
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -52,7 +69,8 @@ export const createUser = async (req, res) => {
             password: hashedPassword, // Password sudah terenkripsi
             gender: gender || null, // Jika tidak diisi, simpan sebagai null
             countryCode: countryCode || null,
-            phoneNumber: phoneNumber || null,
+            phoneNumber: phoneNumberTrimmedFrontZero || null,
+            phoneNumberFull: phoneNumberFull || null,
         },
     });
 
@@ -65,6 +83,7 @@ export const createUser = async (req, res) => {
             gender: newUser.gender,
             countryCode: newUser.countryCode,
             phoneNumber: newUser.phoneNumber,
+            phoneNumberFull: newUser.phoneNumber,
             createdAt: newUser.createdAt,
         },
     });

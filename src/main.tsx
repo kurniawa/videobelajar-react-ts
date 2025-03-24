@@ -6,6 +6,8 @@ import App from './App.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login.tsx'
 import Register from './pages/Register.tsx'
+import Dashboard from './pages/Dashboard.tsx'
+import TestGetAllUser from './pages/TestGetAllUser.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +17,10 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard type='PROFILE' />} />
+          <Route path="/my-class" element={<Dashboard type='MY-CLASS' />} />
+          <Route path="/my-order" element={<Dashboard type='MY-ORDER' />} />
+          <Route path="/test-get-all-users" element={<TestGetAllUser />} />
         </Route>
       </Routes>
     </BrowserRouter>

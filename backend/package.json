@@ -7,7 +7,9 @@
     "fresh": "npx prisma migrate reset --force && npx prisma migrate dev",
     "migrate": "npx prisma migrate dev",
     "seed": "node seed.js",
-    "fresh-seed": "npm run fresh && npm run seed"
+    "fresh-seed": "npm run fresh && npm run seed",
+    "postinstall": "prisma generate",
+    "build": "prisma generate"
   },
   "keywords": [],
   "author": "",

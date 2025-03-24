@@ -42,7 +42,7 @@ export default function LoginForm() {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Login berhasil!");
+                setSuccess("Login berhasil!");
                 localStorage.setItem("token", data.token); // ✅ Simpan token JWT
                 navigate("/dashboard"); // ✅ Redirect ke halaman setelah login sukses
             } else {

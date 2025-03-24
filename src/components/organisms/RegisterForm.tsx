@@ -61,7 +61,7 @@ export default function RegisterForm() {
         }
 
         try {
-            const response = await fetch("http://localhost:9000/api/users", {
+            const response = await fetch("https://videobelajar-react-7juos2s6r-adi-kurniawans-projects.vercel.app/api/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

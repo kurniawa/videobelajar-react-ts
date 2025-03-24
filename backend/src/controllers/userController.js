@@ -3,6 +3,15 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+async function main() {
+  await prisma.$connect(); // Pastikan koneksi sebelum query
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany();

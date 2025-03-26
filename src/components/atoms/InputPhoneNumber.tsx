@@ -49,7 +49,7 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({label, required, cou
                         </div>
                     </div>
                     <select name="country-code" id="country-code" ref={countryCodeRef} className="rounded-r-md px-[10px] py-[4px] min-w-[70px] h-[48px] text-[#222325]">
-                        <option value="+62">+62</option>
+                        <option value="62">+62</option>
                     </select>
                 </div>
     

@@ -10,6 +10,7 @@ import LineHorizontalWithLabel from "../atoms/LineHorizontalWithLabel";
 import { useRef, useState } from "react";
 import LoadingSpinner from "../molecules/LoadingSpinner";
 import ValidationFeedback from "../atoms/ValidationFeedback";
+import axios from "axios";
 
 export default function RegisterForm() {
     
@@ -30,13 +31,13 @@ export default function RegisterForm() {
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        console.log("Full Name:", fullNameRef.current?.value);
-        console.log("Email:", emailRef.current?.value);
-        console.log("Gender:", genderRef.current?.value);
-        console.log("Country Code:", countryCodeRef.current?.value);
-        console.log("Phone Number:", phoneNumberRef.current?.value);
-        console.log("Password:", passwordRef.current?.value);
-        console.log("Password Confirmation:", passwordConfirmationRef.current?.value);
+        // console.log("Full Name:", fullNameRef.current?.value);
+        // console.log("Email:", emailRef.current?.value);
+        // console.log("Gender:", genderRef.current?.value);
+        // console.log("Country Code:", countryCodeRef.current?.value);
+        // console.log("Phone Number:", phoneNumberRef.current?.value);
+        // console.log("Password:", passwordRef.current?.value);
+        // console.log("Password Confirmation:", passwordConfirmationRef.current?.value);
 
         // Mengambil data dari input
         const fullName = fullNameRef.current?.value?.trim() || "";
@@ -46,7 +47,10 @@ export default function RegisterForm() {
         const phoneNumber = phoneNumberRef.current?.value?.trim() || "";
         const password = passwordRef.current?.value; // Jangan trim password
         const passwordConfirmation = passwordConfirmationRef.current?.value; // Jangan trim password
+        let phoneNumberFull = "";
 
+        // console.log(password?.length);
+        // return;
         // Validation
         if (!fullName || !email || !gender || !countryCode || !phoneNumber || !password || !passwordConfirmation) {
             setError("Semua kolom wajib diisi!");
@@ -54,14 +58,87 @@ export default function RegisterForm() {
             return;
         }
         
+        if (password?.length < 8) {
+            setError("Password minimal 8 karakter");
+            setLoading(false);
+            return;
+        }
+
         if (password !== passwordConfirmation) {
             setError("Password dan Konfirmasi Password tidak sama");
             setLoading(false);
             return;
         }
 
+        // Validasi email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("Format email tidak valid");
+            setLoading(false);
+            return;
+        }
+
         try {
-            const response = await fetch("https://videobelajar-react-7juos2s6r-adi-kurniawans-projects.vercel.app/api/users", {
+            const {data: similarEmails} = await axios.get(
+                `https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?email=${email}`
+            );
+        
+            // console.log(similarEmails);
+            if (similarEmails.length !== 0) {
+                // Lakukan pencocokan eksak di frontend
+                const exactMatchEmail = similarEmails.find((user:any) => user.email === email);
+                if (exactMatchEmail) {
+                    setError("Email sudah terdaftar");
+                    setLoading(false);
+                    return;
+                }
+            }
+
+            // throw new Error("existingEmail Test");
+
+        } catch (err: any) {
+            if (err.response?.status !== 404) { // Abaikan error 404 karena berarti email belum ada
+                setError("Terjadi kesalahan saat memeriksa email");
+                setLoading(false);
+                return;
+            }
+        }
+
+        // Validasi nomor telepon
+        let phoneNumberTrimmedFrontZero = "";
+        // Hilangkan angka 0 di depan nomor telepon
+        phoneNumberTrimmedFrontZero = phoneNumber.replace(/^0+/, "");
+
+        phoneNumberFull = `${countryCode}${phoneNumberTrimmedFrontZero}`;
+        console.log("Phone Number Full:", phoneNumberFull);
+        try {
+            // const similarPhoneNumberFull = await axios.get(`https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?phoneNumberFull=${phoneNumberFull}`);
+            const { data: similarPhoneNumberFull } = await axios.get(
+                `https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?phoneNumberFull=${phoneNumberFull}`
+            );
+
+            // console.log(similarPhoneNumberFull);
+            // throw new Error("similarPhoneNumberFull Test");
+            if (similarPhoneNumberFull.length !== 0) {
+                // Lakukan pencocokan eksak di frontend
+                const exactMatchPhoneNumberFull = similarPhoneNumberFull.find((user:any) => user.phoneNumberFull === phoneNumberFull);
+                if (exactMatchPhoneNumberFull) {
+                    setError("Nomor telepon sudah terdaftar");
+                    setLoading(false);
+                    return;
+                }
+            }
+        } catch (error: any) {
+            if (error.response?.status !== 404) { // Abaikan error 404 karena berarti phoneNumberFull belum ada
+                setError("Terjadi kesalahan saat memeriksa phoneNumberFull");
+                setLoading(false);
+                return;
+            }
+        }
+        
+
+        try {
+            const response = await fetch("https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,8 +148,10 @@ export default function RegisterForm() {
                     email,
                     gender,
                     countryCode,
-                    phoneNumber,
+                    phoneNumber: phoneNumberTrimmedFrontZero,
+                    phoneNumberFull,
                     password,
+                    role: "USER",
                 }),
             });
 
@@ -86,7 +165,7 @@ export default function RegisterForm() {
                 setTimeout(() => {
                     navigate("/login"); // ✅ Redirect ke halaman login
                     setLoading(false);
-                }, 2000);
+                }, 1500);
             }
 
         } catch (err: any) {
@@ -95,7 +174,7 @@ export default function RegisterForm() {
             setTimeout(() => {
                 setLoading(false);
                 
-            }, 2000);
+            }, 1500);
         }
 
     };
@@ -117,8 +196,8 @@ export default function RegisterForm() {
                 <InputWithLabel type="email" id="e-mail" name="E-Mail" required={true} ref={emailRef} />
                 <SelectWithLabel type="select" id="jenis-kelamin" name="Jenis Kelamin" options={[{value:"Female", label:"Wanita"}, {value:"Male", label:"Pria"}]} required={true} ref={genderRef} />
                 <InputPhoneNumber label="No. HP" required={true} countryCodeRef={countryCodeRef} phoneNumberRef={phoneNumberRef} />
-                <InputPassword type="password" id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
-                <InputPassword type="password" id="konfirmasi-kata-sandi" name="Konfirmasi Kata Sandi" required={true} ref={passwordConfirmationRef} />
+                <InputPassword id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
+                <InputPassword id="konfirmasi-kata-sandi" name="Konfirmasi Kata Sandi" required={true} ref={passwordConfirmationRef} />
 
                 <div className="flex justify-end">
                     <Link to={'#'} className="font-dm-sans font-[400] text-[14px] text-[#333333AD] xl:text-[16px]">Lupa Password?</Link>
@@ -146,9 +225,15 @@ export default function RegisterForm() {
 }
 
 /**
- * 
-Database sudah jalan untuk fitur registrasi dan Login. Menggunakan bantuan Prisma supaya bisa menggunakan ORM. Databasenya menggunakan bantuan Neon yang sudah terdapat pada Vercel.
-Untuk fitur CRUD saya aplikasikan pada fitur registrasi dan login. Fitur registrasi dan login, serta edit profile user.
-Untuk sisi interaktif: terdapat dropdown menu pada tampilan mobile, terdapat loading spinner (animasi loading ketika sedang memproses sesuatu), terdapat validasi dari feedback (apabila request error ataupun request succeed)
+ *
+CRUD saya implementasikan dengan bantuan MockAPI (mockapi.io).
+CRUD saya implementasikan pada fitur/halaman:
+Register, dimana user dapat melakukan registrasi akun baru. Lalu User dapat login sesuai dengan email dan password yang telah diinputkan pada saat registrasi.
+Dashboard, dimana user dapat mengubah data diri, seperti nama, email, jenis kelamin, nomor telepon, dan password. User juga dapat menambahkan serta menghapus profile picture.
+Untuk sisi interaktif: 
+Dropdown menu pada tampilan mobile
+Loading spinner (animasi loading ketika sedang memproses sesuatu)
+Validasi dari feedback (apabila request error ataupun request succeed)
+Password visibility (user dapat melihat password yang diinputkan)
 
  */

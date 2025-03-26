@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useRef, useState } from "react"
 import LoadingSpinner from "../molecules/LoadingSpinner"
 import ValidationFeedback from "../atoms/ValidationFeedback"
+import axios from "axios"
 
 export default function LoginForm() {
 
@@ -33,26 +34,37 @@ export default function LoginForm() {
         }
 
         try {
-            const response = await fetch("http://localhost:9000/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
+            const response = await axios.get(`https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?email=${email}`);
 
-            const data = await response.json();
-
-            if (response.ok) {
-                setSuccess("Login berhasil!");
-                localStorage.setItem("token", data.token); // ✅ Simpan token JWT
-                navigate("/dashboard"); // ✅ Redirect ke halaman setelah login sukses
-            } else {
-                setError(data.error || "Login gagal. Periksa kembali email dan password Anda.");
+            if (response.data.length === 0) {
+                throw new Error("User tidak ditemukan. Periksa kembali email Anda.");
             }
-        } catch (error) {
-            console.error("Error:", error);
-            setError("Terjadi kesalahan saat menghubungi server.");
+    
+            const user = response.data[0];
+    
+            // Cek apakah password cocok (Sementara ini password dicek di frontend)
+            if (user.password !== password) {
+                throw new Error("Password salah. Coba lagi.");
+            }
+    
+            // Simpan informasi user di localStorage (Mock JWT)
+            const login_user = (({password, ...obj}) => obj)(user);
+
+            // console.log("Login User:", login_user);
+
+            // throw new Error("Cek password berhasil!");
+
+            localStorage.setItem("login_user", JSON.stringify(login_user));
+            
+            setSuccess("Login berhasil!");
+
+        } catch (err:any) {
+            setError(err.message || "Terjadi kesalahan saat login.");
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+                navigate("/dashboard");
+            }, 1500);
         }
     };
 
@@ -67,7 +79,7 @@ export default function LoginForm() {
 
             <div className="mt-[20px] flex flex-col gap-[12px]">
                 <InputWithLabel type="email" id="email" name="E-Mail" required={true} ref={emailRef} />
-                <InputPassword type="password" id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
+                <InputPassword id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
 
                 <div className="flex justify-end">
                     <span className="font-dm-sans font-[500] text-[14px] text-[#333333AD] xl:text-[16px]">Lupa Password?</span>

@@ -1,19 +1,15 @@
 import { RefObject } from "react";
+import InputForEditProfile from "./InputForEditProfile";
 
-interface InputPhoneNumberProps {
+interface InputPhoneNumberEPProps {
     label: string,
-    required: boolean,
     countryCodeRef: RefObject<HTMLSelectElement | null>,
     phoneNumberRef: RefObject<HTMLInputElement | null>,
 }
 
-const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({label, required, countryCodeRef, phoneNumberRef}) => {
+const InputPhoneNumberEP: React.FC<InputPhoneNumberEPProps> = ({label, countryCodeRef, phoneNumberRef}) => {
     return (
         <div>
-            <label htmlFor="no-hp">
-                <span className="font-dm-sans font-[400] text-[14px] text-[#333333AD] xl:text-[16px]">{label}</span>
-                {required && <span className="ml-[4px] text-[#FF5C2B]">*</span>}
-            </label>
             <div className="flex gap-[12px]">
                 <div className="flex rounded-md border border-[#3A35411F]">
                     <div className="flex items-center align-center px-[10px] py-[4px] bg-[#F4F5FA]">
@@ -26,11 +22,10 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({label, required, cou
                         <option value="62">+62</option>
                     </select>
                 </div>
-    
-                <input id="no-hp" type="text" ref={phoneNumberRef} className="rounded-md px-[10px] py-[4px] w-full h-[48px] border border-[#3A35411F]" />
+                <InputForEditProfile label={label} ref={phoneNumberRef} />
             </div>
         </div>
     )
 }
 
-export default InputPhoneNumber;
+export default InputPhoneNumberEP;

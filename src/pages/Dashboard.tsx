@@ -26,9 +26,9 @@ function Dashboard({ type }: DashboardProps) {
 
     return (
         <MainLayout>
-            <main className="px-[20px] py-[28px] xl:py-[64px] xl:px-[120px] flex gap-[24px] flex-row">
+            <main>
                 {error && <ValidationFeedbackWithSpinner type="error" message={error} />}
-                {loginUser && <EditProfile type={type} />}
+                {loginUser && <EditProfile type={type} loginUser={loginUser} />}
             </main>
         </MainLayout>
     );

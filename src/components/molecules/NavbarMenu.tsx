@@ -17,7 +17,7 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({options, loginUser}) => {
         localStorage.removeItem("login_user");
         setLoading(true);
         setTimeout(() => {
-            navigate("/");
+            navigate("/login");
         }, 1500);
     }
 

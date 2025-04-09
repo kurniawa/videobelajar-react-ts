@@ -30,6 +30,8 @@ export default function RegisterForm() {
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+        setSuccess(null);
         setLoading(true);
         // console.log("Full Name:", fullNameRef.current?.value);
         // console.log("Email:", emailRef.current?.value);
@@ -210,7 +212,7 @@ export default function RegisterForm() {
             {success && <ValidationFeedback type="success" message={success} />}
 
             <div className="space-y-[16px] mt-[20px] xl:mt-[24px]">
-                <ButtonLime500 type="submit" label="Daftar" to={null} className="h-[34px] xl:h-[42px]" />
+                <ButtonLime500 type="submit" label="Daftar" to={null} className=" w-full h-[34px] xl:h-[42px]" />
                 <ButtonGreen200 type="button" label="Masuk" to='/login' />
             </div>
 

@@ -80,8 +80,9 @@ const EditProfile = ({type, loginUser}: EditProfileProps) => {
 
     const handleEditProfile = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(null); // Reset error sebelum melakukan request
         setLoading(true);
+        setError(null); // Reset error sebelum upload
+        setSuccess(null);
         const fullName = fullNameRef.current?.value?.trim() || "";
         const email = emailRef.current?.value?.trim() || "";
         const gender = genderRef.current?.value?.trim() || "";
@@ -181,6 +182,7 @@ const EditProfile = ({type, loginUser}: EditProfileProps) => {
             });
             setSuccess("Profil berhasil diperbarui!");
             setError(null); // Reset error jika berhasil
+            setProfilePicture(loginUser.profilePicturePath || ""); // Reset foto profil ke yang lama jika tidak diubah
         } catch (error: any) {
             setError(error.message);
         } finally {
@@ -193,6 +195,7 @@ const EditProfile = ({type, loginUser}: EditProfileProps) => {
     const handleEditProfilePicture = async () => {
         setLoading(true);
         setError(null); // Reset error sebelum upload
+        setSuccess(null); // Reset success sebelum upload
         if (!profilePicturePathRef.current?.files?.[0]) {
             alert("Pilih gambar terlebih dahulu!");
             return;

@@ -33,7 +33,8 @@ export default function LoginForm() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError("");
+        setError(null);
+        setSuccess(null);
 
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
@@ -97,7 +98,7 @@ export default function LoginForm() {
             {success && <ValidationFeedback type="success" message={success} />}
 
             <div className="mt-[20px] xl:mt-[24px] space-y-[16px]">
-                <ButtonLime500 type="submit" label="Masuk" to={null} className="h-[34px] xl:h-[42px]" />
+                <ButtonLime500 type="submit" label="Masuk" to={null} className=" w-full h-[34px] xl:h-[42px]" />
                 <ButtonGreen200 type="button" label="Daftar" to='/register' />
             </div>
 

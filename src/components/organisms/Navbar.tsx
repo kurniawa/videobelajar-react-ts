@@ -2,8 +2,11 @@ import HamburgerMenu from "../molecules/HamburgerMenu";
 import LogoVideobelajar from "../atoms/LogoVideobelajar";
 import NavbarMenu from "../molecules/NavbarMenu";
 
+interface NavbarProps {
+    loginUser: {id:string, fullName: string, email: string, countryCode: string, phoneNumber:string,  phoneNumberFull: string, gender: string, role: string, profilePicturePath: string|null} | null,
+}
 
-export default function Navbar() {
+export default function Navbar({loginUser}: NavbarProps) {
 
     const login_user = JSON.parse(localStorage.getItem("login_user") || "null");
 
@@ -28,7 +31,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden xl:flex xl:gap-[16px]">
-            <NavbarMenu options={options} />
+            <NavbarMenu loginUser={loginUser} options={options} />
         </div>
         
         {/* Hamburger Menu untuk layar kecil */}

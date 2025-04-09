@@ -8,7 +8,7 @@ import SiteMap from "./SiteMap";
 export default function Footer() {
     
     return (
-        <footer className="mt-[28px] border-t border-[#3A35411F] p-[20px] xl:py-[60px] xl:px-[120px] bg-white">
+        <footer className="border-t border-[#3A35411F] p-[20px] xl:py-[60px] xl:px-[120px] bg-white">
             <div className="flex flex-col gap-[16px] xl:flex-row xl:justify-between xl:gap-[0px]">
                 {/* Alamat dan Kontak */}
                 <section>

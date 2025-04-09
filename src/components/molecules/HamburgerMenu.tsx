@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 
 interface HamburgerMenuProps {
@@ -17,7 +17,7 @@ export default function HamburgerMenu({className, options}:HamburgerMenuProps) {
         localStorage.removeItem("login_user");
         setLoading(true);
         setTimeout(() => {
-            navigate("/");
+            navigate("/login");
         }, 1500);
     }
 

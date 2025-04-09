@@ -110,7 +110,7 @@ export default function RegisterForm() {
         phoneNumberTrimmedFrontZero = phoneNumber.replace(/^0+/, "");
 
         phoneNumberFull = `${countryCode}${phoneNumberTrimmedFrontZero}`;
-        console.log("Phone Number Full:", phoneNumberFull);
+        // console.log("Phone Number Full:", phoneNumberFull);
         try {
             // const similarPhoneNumberFull = await axios.get(`https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?phoneNumberFull=${phoneNumberFull}`);
             const { data: similarPhoneNumberFull } = await axios.get(
@@ -136,6 +136,7 @@ export default function RegisterForm() {
             }
         }
         
+        const profilePicturePath = "";
 
         try {
             const response = await fetch("https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users", {
@@ -152,6 +153,7 @@ export default function RegisterForm() {
                     phoneNumberFull,
                     password,
                     role: "USER",
+                    profilePicturePath
                 }),
             });
 
@@ -208,7 +210,7 @@ export default function RegisterForm() {
             {success && <ValidationFeedback type="success" message={success} />}
 
             <div className="space-y-[16px] mt-[20px] xl:mt-[24px]">
-                <ButtonLime500 type="submit" label="Daftar" to={null} />
+                <ButtonLime500 type="submit" label="Daftar" to={null} className="h-[34px] xl:h-[42px]" />
                 <ButtonGreen200 type="button" label="Masuk" to='/login' />
             </div>
 
@@ -226,10 +228,12 @@ export default function RegisterForm() {
 
 /**
  *
-CRUD saya implementasikan dengan bantuan MockAPI (mockapi.io).
-CRUD saya implementasikan pada fitur/halaman:
+CRUD diimplementasikan dengan bantuan MockAPI (mockapi.io).
+CRUD diimplementasikan pada fitur/halaman:
 Register, dimana user dapat melakukan registrasi akun baru. Lalu User dapat login sesuai dengan email dan password yang telah diinputkan pada saat registrasi.
-Dashboard, dimana user dapat mengubah data diri, seperti nama, email, jenis kelamin, nomor telepon, dan password. User juga dapat menambahkan serta menghapus profile picture.
+Dashboard, dimana user dapat mengubah data diri, seperti nama, email, jenis kelamin, nomor telepon, dan password. User juga dapat menambahkan serta mengubah profile picture.
+Fitur Profile Picture menggunakan API dari Cloudinary (cloudinary.com).
+
 Untuk sisi interaktif: 
 Dropdown menu pada tampilan mobile
 Loading spinner (animasi loading ketika sedang memproses sesuatu)

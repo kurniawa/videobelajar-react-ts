@@ -9,7 +9,7 @@ const InputPasswordEP = forwardRef<HTMLInputElement, InputPasswordEPProps>(
         const [showPassword, setShowPassword] = useState(false);
 
         return (
-            <div>
+            <div className="w-full">
                 <div className="relative group">
                     <label className="absolute -top-3 left-2 bg-white px-1 group-focus-within:text-[#3ECF4C]">
                         <span className="font-dm-sans font-[400] text-[14px] font-color-333333AD xl:text-[16px]">

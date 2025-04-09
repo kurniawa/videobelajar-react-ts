@@ -5,7 +5,7 @@ import ButtonGoogle from "../atoms/ButtonGoogle"
 import ButtonLime500 from "../atoms/ButtonLime500"
 import ButtonGreen200 from "../atoms/ButtonGreen200"
 import { useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import LoadingSpinner from "../molecules/LoadingSpinner"
 import ValidationFeedback from "../atoms/ValidationFeedback"
 import axios from "axios"
@@ -18,6 +18,17 @@ export default function LoginForm() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (success === "Login berhasil!") {
+            // Delay 1.5 detik sebelum redirect
+            const timer = setTimeout(() => {
+                navigate("/dashboard");
+            }, 1500);
+        
+            return () => clearTimeout(timer); // Clean up
+        }
+    }, [success]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,31 +50,27 @@ export default function LoginForm() {
             if (response.data.length === 0) {
                 throw new Error("User tidak ditemukan. Periksa kembali email Anda.");
             }
-    
+
             const user = response.data[0];
-    
+
             // Cek apakah password cocok (Sementara ini password dicek di frontend)
             if (user.password !== password) {
                 throw new Error("Password salah. Coba lagi.");
             }
-    
+
             // Simpan informasi user di localStorage (Mock JWT)
             const login_user = (({password, ...obj}) => obj)(user);
 
-            // console.log("Login User:", login_user);
-
-            // throw new Error("Cek password berhasil!");
-
             localStorage.setItem("login_user", JSON.stringify(login_user));
-            
+
             setSuccess("Login berhasil!");
 
         } catch (err:any) {
             setError(err.message || "Terjadi kesalahan saat login.");
         } finally {
+            // Simulasi loading selama 1.5 detik sebelum redirect
             setTimeout(() => {
                 setLoading(false);
-                navigate("/dashboard");
             }, 1500);
         }
     };
@@ -90,18 +97,18 @@ export default function LoginForm() {
             {success && <ValidationFeedback type="success" message={success} />}
 
             <div className="mt-[20px] xl:mt-[24px] space-y-[16px]">
-                <ButtonLime500 type="submit" label="Masuk" to={null} />
+                <ButtonLime500 type="submit" label="Masuk" to={null} className="h-[34px] xl:h-[42px]" />
                 <ButtonGreen200 type="button" label="Daftar" to='/register' />
             </div>
 
             <div className="mt-[20px] xl:mt-[24px]">
                 <LineHorizontalWithLabel label="atau" />
             </div>
-    
+
             <div className="mt-[20px] xl:mt-[24px]">
                 <ButtonGoogle type="button" label="Masuk dengan Google" />
             </div>
-            
+
         </form>
     )
 }

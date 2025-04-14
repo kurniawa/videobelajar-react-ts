@@ -13,7 +13,7 @@ const ValidationFeedback: React.FC<ValidationFeedbackProps> = ({ type, message }
     }
 
     return (
-        <div className={`${colorClass} text-xs font-bold p-2 rounded mt-[20px]`}><p>{message}</p></div>
+        <div className={`${colorClass} text-xs font-bold p-2 rounded`}><p>{message}</p></div>
     );
 }
 

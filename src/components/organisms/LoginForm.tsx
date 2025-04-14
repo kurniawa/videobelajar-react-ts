@@ -5,9 +5,10 @@ import ButtonGoogle from "../atoms/ButtonGoogle"
 import ButtonLime500 from "../atoms/ButtonLime500"
 import ButtonGreen200 from "../atoms/ButtonGreen200"
 import { useNavigate } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import LoadingSpinner from "../molecules/LoadingSpinner"
 import ValidationFeedback from "../atoms/ValidationFeedback"
+import axios from "axios"
 
 export default function LoginForm() {
 
@@ -18,10 +19,22 @@ export default function LoginForm() {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
 
+    useEffect(() => {
+        if (success === "Login berhasil!") {
+            // Delay 1.5 detik sebelum redirect
+            const timer = setTimeout(() => {
+                navigate("/dashboard");
+            }, 1500);
+        
+            return () => clearTimeout(timer); // Clean up
+        }
+    }, [success]);
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError("");
+        setError(null);
+        setSuccess(null);
 
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
@@ -33,26 +46,33 @@ export default function LoginForm() {
         }
 
         try {
-            const response = await fetch("http://localhost:9000/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
+            const response = await axios.get(`https://67c565bec4649b9551b67dc8.mockapi.io/api/v1/users?email=${email}`);
 
-            const data = await response.json();
-
-            if (response.ok) {
-                setSuccess("Login berhasil!");
-                localStorage.setItem("token", data.token); // ✅ Simpan token JWT
-                navigate("/dashboard"); // ✅ Redirect ke halaman setelah login sukses
-            } else {
-                setError(data.error || "Login gagal. Periksa kembali email dan password Anda.");
+            if (response.data.length === 0) {
+                throw new Error("User tidak ditemukan. Periksa kembali email Anda.");
             }
-        } catch (error) {
-            console.error("Error:", error);
-            setError("Terjadi kesalahan saat menghubungi server.");
+
+            const user = response.data[0];
+
+            // Cek apakah password cocok (Sementara ini password dicek di frontend)
+            if (user.password !== password) {
+                throw new Error("Password salah. Coba lagi.");
+            }
+
+            // Simpan informasi user di localStorage (Mock JWT)
+            const login_user = (({password, ...obj}) => obj)(user);
+
+            localStorage.setItem("login_user", JSON.stringify(login_user));
+
+            setSuccess("Login berhasil!");
+
+        } catch (err:any) {
+            setError(err.message || "Terjadi kesalahan saat login.");
         } finally {
-            setLoading(false);
+            // Simulasi loading selama 1.5 detik sebelum redirect
+            setTimeout(() => {
+                setLoading(false);
+            }, 1500);
         }
     };
 
@@ -67,7 +87,7 @@ export default function LoginForm() {
 
             <div className="mt-[20px] flex flex-col gap-[12px]">
                 <InputWithLabel type="email" id="email" name="E-Mail" required={true} ref={emailRef} />
-                <InputPassword type="password" id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
+                <InputPassword id="kata-sandi" name="Kata Sandi" required={true} ref={passwordRef} />
 
                 <div className="flex justify-end">
                     <span className="font-dm-sans font-[500] text-[14px] text-[#333333AD] xl:text-[16px]">Lupa Password?</span>
@@ -78,18 +98,18 @@ export default function LoginForm() {
             {success && <ValidationFeedback type="success" message={success} />}
 
             <div className="mt-[20px] xl:mt-[24px] space-y-[16px]">
-                <ButtonLime500 type="submit" label="Masuk" to={null} />
+                <ButtonLime500 type="submit" label="Masuk" to={null} className=" w-full h-[34px] xl:h-[42px]" />
                 <ButtonGreen200 type="button" label="Daftar" to='/register' />
             </div>
 
             <div className="mt-[20px] xl:mt-[24px]">
                 <LineHorizontalWithLabel label="atau" />
             </div>
-    
+
             <div className="mt-[20px] xl:mt-[24px]">
                 <ButtonGoogle type="button" label="Masuk dengan Google" />
             </div>
-            
+
         </form>
     )
 }

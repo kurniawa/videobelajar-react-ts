@@ -1,30 +1,25 @@
 import { forwardRef, useState } from "react";
 
-interface InputPasswordProps {
-    id: string;
-    name: string;
-    required: boolean;
+interface InputPasswordEPProps {
+    label: string;
 }
 
-const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
-    ({ id, name, required }, ref) => {
+const InputPasswordEP = forwardRef<HTMLInputElement, InputPasswordEPProps>(
+    ({ label }, ref) => {
         const [showPassword, setShowPassword] = useState(false);
 
         return (
-            <div>
-                <label htmlFor={id}>
-                    <span className="font-dm-sans font-[400] text-[14px] font-color-333333AD xl:text-[16px]">
-                        {name}
-                    </span>
-                    {required && <span className="ml-[4px] text-[#FF5C2B]">*</span>}
-                </label>
-                <div className="relative">
+            <div className="w-full">
+                <div className="relative group">
+                    <label className="absolute -top-3 left-2 bg-white px-1 group-focus-within:text-[#3ECF4C]">
+                        <span className="font-dm-sans font-[400] text-[14px] font-color-333333AD xl:text-[16px]">
+                            {label}
+                        </span>
+                    </label>
                     <input
                         type={showPassword ? "text" : "password"}
-                        id={id}
-                        required={required}
                         ref={ref}
-                        className="rounded-md px-[10px] py-[4px] w-full h-[48px] border border-[#3A35411F]"
+                        className="rounded-md px-[10px] py-[4px] w-full h-[48px] border border-[#3A35411F] focus:border-[#3ECF4C] focus:outline-none focus:ring-0"
                     />
                     <button
                         type="button"
@@ -65,4 +60,4 @@ const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
     }
 );
 
-export default InputPassword;
+export default InputPasswordEP;
